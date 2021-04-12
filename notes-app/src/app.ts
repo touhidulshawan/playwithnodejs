@@ -37,3 +37,5 @@ yargs.command({
     console.log("Listing add notes");
   },
 });
+
+console.log(yargs.argv);
