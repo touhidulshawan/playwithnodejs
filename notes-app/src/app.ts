@@ -6,8 +6,15 @@ import yargs from "yargs";
 yargs.command({
   command: "add",
   describe: "Add a note",
-  handler: () => {
-    console.log("Adding a note");
+  builder: {
+    title: {
+      describe: "Note Title",
+      demandOption: true,
+      type: "string",
+    },
+  },
+  handler: (argv) => {
+    console.log(argv.title);
   },
 });
 

@@ -7,8 +7,15 @@ var yargs_1 = __importDefault(require("yargs"));
 yargs_1.default.command({
     command: "add",
     describe: "Add a note",
-    handler: function () {
-        console.log("Adding a note");
+    builder: {
+        title: {
+            describe: "Note Title",
+            demandOption: true,
+            type: "string",
+        },
+    },
+    handler: function (argv) {
+        console.log(argv.title);
     },
 });
 yargs_1.default.command({
