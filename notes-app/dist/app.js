@@ -18,4 +18,17 @@ yargs_1.default.command({
         console.log("Remvoe a note");
     },
 });
-console.log(yargs_1.default.argv);
+yargs_1.default.command({
+    command: "read",
+    describe: "View a note",
+    handler: function () {
+        console.log("Viewing a note");
+    },
+});
+yargs_1.default.command({
+    command: "list",
+    describe: "Listing all notes",
+    handler: function () {
+        console.log("Listing add notes");
+    },
+});
