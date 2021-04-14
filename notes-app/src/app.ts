@@ -1,4 +1,5 @@
 import yargs from "yargs";
+import { addNote } from "./notes";
 // add remove list read
 
 // add command
@@ -17,8 +18,8 @@ yargs.command({
       type: "string",
     },
   },
-  handler: (argv) => {
-    console.log(argv.title);
+  handler: ({ title, body }) => {
+    addNote(title, body);
   },
 });
 

@@ -1,13 +1,35 @@
-interface Note {
-  id: number;
-  note: string;
+import fs from "fs";
+
+interface NoteProps {
+  title: string;
+  body: string;
 }
 
-const myNotes: Array<Note> = [
-  { id: 1, note: "I have to go to class at 10AM" },
-  { id: 2, note: "I have to go to market to buy egss" },
-];
-
 export const getNotes = () => {
-  return myNotes;
+  return "Notes...";
+};
+
+export const addNote = (title: string, body: string) => {
+  // get copy of existing notes
+  const notes: Array<NoteProps> = loadNotes();
+  notes.push({
+    title: title,
+    body: body,
+  });
+  saveNotes(notes);
+};
+
+const saveNotes = (notes: Array<NoteProps>) => {
+  const dataJson = JSON.stringify(notes);
+  fs.writeFileSync("../data/notes.json", dataJson);
+};
+
+const loadNotes = () => {
+  try {
+    const dataBuffer = fs.readFileSync("../data/notes.json");
+    const dataString = dataBuffer.toString();
+    return JSON.parse(dataString);
+  } catch (err) {
+    return [];
+  }
 };
