@@ -1,5 +1,4 @@
 import yargs from "yargs";
-
 // add remove list read
 
 // add command
@@ -9,6 +8,11 @@ yargs.command({
   builder: {
     title: {
       describe: "Note Title",
+      demandOption: true,
+      type: "string",
+    },
+    body: {
+      describe: "Note Body",
       demandOption: true,
       type: "string",
     },
