@@ -19,6 +19,7 @@ export const addNote = (title: string, body: string) => {
     body: body,
   });
   saveNotes(notes);
+  console.log(chalk.green.inverse("Note added successfully"));
 };
 
 // remove a note

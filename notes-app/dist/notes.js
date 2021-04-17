@@ -17,6 +17,7 @@ var addNote = function (title, body) {
         body: body,
     });
     saveNotes(notes);
+    console.log(chalk_1.default.green.inverse("Note added successfully"));
 };
 exports.addNote = addNote;
 var removeNote = function (title) {
