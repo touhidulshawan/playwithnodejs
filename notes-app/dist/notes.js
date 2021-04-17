@@ -12,8 +12,8 @@ var getNotes = function () {
 exports.getNotes = getNotes;
 var addNote = function (title, body) {
     var notes = loadNotes();
-    var filteredNote = notes.filter(function (note) { return note.title === title; });
-    if (filteredNote.length === 0) {
+    var duplicateNote = notes.find(function (note) { return note.title === title; });
+    if (!duplicateNote) {
         notes.push({
             title: title,
             body: body,

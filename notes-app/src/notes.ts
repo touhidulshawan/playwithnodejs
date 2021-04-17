@@ -15,9 +15,9 @@ export const addNote = (title: string, body: string) => {
   // get copy of existing notes
   const notes: Array<NoteProps> = loadNotes();
   // check is there any note with same title
-  const filteredNote = notes.filter((note) => note.title === title);
+  const duplicateNote = notes.find((note) => note.title === title);
 
-  if (filteredNote.length === 0) {
+  if (!duplicateNote) {
     notes.push({
       title: title,
       body: body,
