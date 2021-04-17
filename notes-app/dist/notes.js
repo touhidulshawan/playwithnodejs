@@ -20,8 +20,13 @@ var addNote = function (title, body) {
 exports.addNote = addNote;
 var removeNote = function (title) {
     var notes = loadNotes();
-    var UpdatedNotes = notes.filter(function (note) { return note.title !== title; });
-    saveNotes(UpdatedNotes);
+    try {
+        var UpdatedNotes = notes.filter(function (note) { return note.title !== title; });
+        saveNotes(UpdatedNotes);
+    }
+    catch (err) {
+        console.log("Title not found!!");
+    }
 };
 exports.removeNote = removeNote;
 var saveNotes = function (notes) {
