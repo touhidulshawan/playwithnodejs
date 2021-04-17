@@ -14,12 +14,19 @@ export const getNotes = () => {
 export const addNote = (title: string, body: string) => {
   // get copy of existing notes
   const notes: Array<NoteProps> = loadNotes();
-  notes.push({
-    title: title,
-    body: body,
-  });
-  saveNotes(notes);
-  console.log(chalk.green.inverse("Note added successfully"));
+  // check is there any note with same title
+  const filteredNote = notes.filter((note) => note.title === title);
+
+  if (filteredNote.length === 0) {
+    notes.push({
+      title: title,
+      body: body,
+    });
+    saveNotes(notes);
+    console.log(chalk.green.inverse("Note added successfully"));
+  } else {
+    console.log(chalk.red.inverse("Duplicate Note title found"));
+  }
 };
 
 // remove a note

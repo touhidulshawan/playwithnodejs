@@ -12,12 +12,18 @@ var getNotes = function () {
 exports.getNotes = getNotes;
 var addNote = function (title, body) {
     var notes = loadNotes();
-    notes.push({
-        title: title,
-        body: body,
-    });
-    saveNotes(notes);
-    console.log(chalk_1.default.green.inverse("Note added successfully"));
+    var filteredNote = notes.filter(function (note) { return note.title === title; });
+    if (filteredNote.length === 0) {
+        notes.push({
+            title: title,
+            body: body,
+        });
+        saveNotes(notes);
+        console.log(chalk_1.default.green.inverse("Note added successfully"));
+    }
+    else {
+        console.log(chalk_1.default.red.inverse("Duplicate Note title found"));
+    }
 };
 exports.addNote = addNote;
 var removeNote = function (title) {
