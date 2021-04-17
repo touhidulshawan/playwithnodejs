@@ -63,3 +63,4 @@ yargs_1.default.command({
     },
 });
 console.log(yargs_1.default.argv);
+//# sourceMappingURL=app.js.map

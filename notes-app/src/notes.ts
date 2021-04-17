@@ -8,6 +8,7 @@ interface NoteProps {
 
 // add note
 export const addNote = (title: string, body: string) => {
+  debugger;
   // get copy of existing notes
   const notes: Array<NoteProps> = loadNotes();
   // check is there any note with same title

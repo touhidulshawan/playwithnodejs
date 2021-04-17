@@ -7,6 +7,7 @@ exports.readNote = exports.listNotes = exports.removeNote = exports.addNote = vo
 var fs_1 = __importDefault(require("fs"));
 var chalk_1 = __importDefault(require("chalk"));
 var addNote = function (title, body) {
+    debugger;
     var notes = loadNotes();
     var duplicateNote = notes.find(function (note) { return note.title === title; });
     if (!duplicateNote) {
@@ -67,3 +68,4 @@ var loadNotes = function () {
         return [];
     }
 };
+//# sourceMappingURL=notes.js.map

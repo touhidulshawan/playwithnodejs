@@ -11,3 +11,4 @@ parsedData.name = "Touhidul";
 parsedData.age = 25;
 var modifiedData = JSON.stringify(parsedData);
 fs_1.default.writeFileSync("../../data/jsonData.json", modifiedData);
+//# sourceMappingURL=playground.js.map
