@@ -1,4 +1,5 @@
 import fs from "fs";
+import chalk from "chalk";
 
 interface NoteProps {
   title: string;
@@ -25,13 +26,16 @@ export const addNote = (title: string, body: string) => {
 export const removeNote = (title: string) => {
   // get copy of existing notes
   const notes: Array<NoteProps> = loadNotes();
-  try {
-    const UpdatedNotes: Array<NoteProps> = notes.filter(
-      (note) => note.title !== title
-    );
-    saveNotes(UpdatedNotes);
-  } catch (err) {
-    console.log("Title not found!!");
+  const updatedNotes: Array<NoteProps> = notes.filter(
+    (note) => note.title !== title
+  );
+
+  // check if note is actually remove or not
+  if (notes.length > updatedNotes.length) {
+    console.log(chalk.green.inverse("Note is removed"));
+    saveNotes(updatedNotes);
+  } else {
+    console.log(chalk.red.inverse("Note not found"));
   }
 };
 

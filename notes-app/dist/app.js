@@ -28,6 +28,13 @@ yargs_1.default.command({
 yargs_1.default.command({
     command: "remove",
     describe: "Remove a note",
+    builder: {
+        title: {
+            describe: "Note Title",
+            demandOption: true,
+            type: "string",
+        },
+    },
     handler: function (_a) {
         var title = _a.title;
         notes_1.removeNote(title);

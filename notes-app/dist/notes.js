@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.removeNote = exports.addNote = exports.getNotes = void 0;
 var fs_1 = __importDefault(require("fs"));
+var chalk_1 = __importDefault(require("chalk"));
 var getNotes = function () {
     return "Notes...";
 };
@@ -20,12 +21,13 @@ var addNote = function (title, body) {
 exports.addNote = addNote;
 var removeNote = function (title) {
     var notes = loadNotes();
-    try {
-        var UpdatedNotes = notes.filter(function (note) { return note.title !== title; });
-        saveNotes(UpdatedNotes);
+    var updatedNotes = notes.filter(function (note) { return note.title !== title; });
+    if (notes.length > updatedNotes.length) {
+        console.log(chalk_1.default.green.inverse("Note is removed"));
+        saveNotes(updatedNotes);
     }
-    catch (err) {
-        console.log("Title not found!!");
+    else {
+        console.log(chalk_1.default.red.inverse("Note not found"));
     }
 };
 exports.removeNote = removeNote;
