@@ -1,5 +1,5 @@
 import yargs from "yargs";
-import { addNote, listNotes, removeNote } from "./notes";
+import { addNote, listNotes, readNote, removeNote } from "./notes";
 
 interface NoteTitle {
   title: string;
@@ -52,8 +52,15 @@ yargs.command({
 yargs.command({
   command: "read",
   describe: "View a note",
-  handler: () => {
-    console.log("Viewing a note");
+  builder: {
+    title: {
+      describe: "Note Title",
+      demandOption: true,
+      type: "string",
+    },
+  },
+  handler: ({ title }: NoteTitle) => {
+    readNote(title);
   },
 });
 

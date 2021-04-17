@@ -3,13 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.listNotes = exports.removeNote = exports.addNote = exports.getNotes = void 0;
+exports.readNote = exports.listNotes = exports.removeNote = exports.addNote = void 0;
 var fs_1 = __importDefault(require("fs"));
 var chalk_1 = __importDefault(require("chalk"));
-var getNotes = function () {
-    return "Notes...";
-};
-exports.getNotes = getNotes;
 var addNote = function (title, body) {
     var notes = loadNotes();
     var duplicateNote = notes.find(function (note) { return note.title === title; });
@@ -40,11 +36,23 @@ var removeNote = function (title) {
 exports.removeNote = removeNote;
 var listNotes = function () {
     var notes = loadNotes();
+    console.log(chalk_1.default.cyan.inverse("Your Notes\n"));
     notes.map(function (note) {
         console.log(chalk_1.default.bgBlue.white(note.title) + "\n" + chalk_1.default.bgGray.white(note.body) + "\n");
     });
 };
 exports.listNotes = listNotes;
+var readNote = function (title) {
+    var notes = loadNotes();
+    var findNote = notes.find(function (note) { return note.title === title; });
+    if (findNote) {
+        console.log(chalk_1.default.bgBlue.white(findNote.title) + "\n" + chalk_1.default.bgGray.white(findNote.body) + "\n");
+    }
+    else {
+        console.log(chalk_1.default.red.inverse("Note not found. Invalid Note Title"));
+    }
+};
+exports.readNote = readNote;
 var saveNotes = function (notes) {
     var dataJson = JSON.stringify(notes);
     fs_1.default.writeFileSync("../data/notes.json", dataJson);

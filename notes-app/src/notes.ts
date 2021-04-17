@@ -6,10 +6,6 @@ interface NoteProps {
   body: string;
 }
 
-export const getNotes = () => {
-  return "Notes...";
-};
-
 // add note
 export const addNote = (title: string, body: string) => {
   // get copy of existing notes
@@ -51,12 +47,30 @@ export const removeNote = (title: string) => {
 
 export const listNotes = () => {
   const notes: Array<NoteProps> = loadNotes();
-
+  console.log(chalk.cyan.inverse("Your Notes\n"));
   notes.map((note) => {
     console.log(
       `${chalk.bgBlue.white(note.title)}\n${chalk.bgGray.white(note.body)}\n`
     );
   });
+};
+
+// read a note
+
+export const readNote = (title: string) => {
+  // load existing notes
+  const notes: Array<NoteProps> = loadNotes();
+  const findNote = notes.find((note) => note.title === title);
+
+  if (findNote) {
+    console.log(
+      `${chalk.bgBlue.white(findNote.title)}\n${chalk.bgGray.white(
+        findNote.body
+      )}\n`
+    );
+  } else {
+    console.log(chalk.red.inverse("Note not found. Invalid Note Title"));
+  }
 };
 
 const saveNotes = (notes: Array<NoteProps>) => {

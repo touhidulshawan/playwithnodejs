@@ -43,8 +43,16 @@ yargs_1.default.command({
 yargs_1.default.command({
     command: "read",
     describe: "View a note",
-    handler: function () {
-        console.log("Viewing a note");
+    builder: {
+        title: {
+            describe: "Note Title",
+            demandOption: true,
+            type: "string",
+        },
+    },
+    handler: function (_a) {
+        var title = _a.title;
+        notes_1.readNote(title);
     },
 });
 yargs_1.default.command({
