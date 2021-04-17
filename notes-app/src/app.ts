@@ -1,5 +1,14 @@
 import yargs from "yargs";
-import { addNote } from "./notes";
+import { addNote, removeNote } from "./notes";
+
+interface NoteTitle {
+  title: string;
+}
+
+interface NoteExtraProps extends NoteTitle {
+  body: string;
+}
+
 // add remove list read
 
 // add command
@@ -18,7 +27,7 @@ yargs.command({
       type: "string",
     },
   },
-  handler: ({ title, body }) => {
+  handler: ({ title, body }: NoteExtraProps) => {
     addNote(title, body);
   },
 });
@@ -27,8 +36,8 @@ yargs.command({
 yargs.command({
   command: "remove",
   describe: "Remove a note",
-  handler: () => {
-    console.log("Remvoe a note");
+  handler: ({ title }: NoteTitle) => {
+    removeNote(title);
   },
 });
 

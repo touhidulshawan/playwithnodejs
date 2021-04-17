@@ -9,6 +9,7 @@ export const getNotes = () => {
   return "Notes...";
 };
 
+// add note
 export const addNote = (title: string, body: string) => {
   // get copy of existing notes
   const notes: Array<NoteProps> = loadNotes();
@@ -17,6 +18,17 @@ export const addNote = (title: string, body: string) => {
     body: body,
   });
   saveNotes(notes);
+};
+
+// remove a note
+
+export const removeNote = (title: string) => {
+  // get copy of existing notes
+  const notes: Array<NoteProps> = loadNotes();
+  const UpdatedNotes: Array<NoteProps> = notes.filter(
+    (note) => note.title !== title
+  );
+  saveNotes(UpdatedNotes);
 };
 
 const saveNotes = (notes: Array<NoteProps>) => {

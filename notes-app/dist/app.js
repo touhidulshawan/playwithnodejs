@@ -28,8 +28,9 @@ yargs_1.default.command({
 yargs_1.default.command({
     command: "remove",
     describe: "Remove a note",
-    handler: function () {
-        console.log("Remvoe a note");
+    handler: function (_a) {
+        var title = _a.title;
+        notes_1.removeNote(title);
     },
 });
 yargs_1.default.command({

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addNote = exports.getNotes = void 0;
+exports.removeNote = exports.addNote = exports.getNotes = void 0;
 var fs_1 = __importDefault(require("fs"));
 var getNotes = function () {
     return "Notes...";
@@ -18,6 +18,12 @@ var addNote = function (title, body) {
     saveNotes(notes);
 };
 exports.addNote = addNote;
+var removeNote = function (title) {
+    var notes = loadNotes();
+    var UpdatedNotes = notes.filter(function (note) { return note.title !== title; });
+    saveNotes(UpdatedNotes);
+};
+exports.removeNote = removeNote;
 var saveNotes = function (notes) {
     var dataJson = JSON.stringify(notes);
     fs_1.default.writeFileSync("../data/notes.json", dataJson);
