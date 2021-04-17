@@ -51,7 +51,7 @@ yargs_1.default.command({
     command: "list",
     describe: "Listing all notes",
     handler: function () {
-        console.log("Listing add notes");
+        notes_1.listNotes();
     },
 });
 console.log(yargs_1.default.argv);

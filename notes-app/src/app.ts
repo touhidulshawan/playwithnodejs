@@ -1,5 +1,5 @@
 import yargs from "yargs";
-import { addNote, removeNote } from "./notes";
+import { addNote, listNotes, removeNote } from "./notes";
 
 interface NoteTitle {
   title: string;
@@ -62,7 +62,7 @@ yargs.command({
   command: "list",
   describe: "Listing all notes",
   handler: () => {
-    console.log("Listing add notes");
+    listNotes();
   },
 });
 

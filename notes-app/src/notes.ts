@@ -47,6 +47,18 @@ export const removeNote = (title: string) => {
   }
 };
 
+// list all notes
+
+export const listNotes = () => {
+  const notes: Array<NoteProps> = loadNotes();
+
+  notes.map((note) => {
+    console.log(
+      `${chalk.bgBlue.white(note.title)}\n${chalk.bgGray.white(note.body)}\n`
+    );
+  });
+};
+
 const saveNotes = (notes: Array<NoteProps>) => {
   const dataJson = JSON.stringify(notes);
   fs.writeFileSync("../data/notes.json", dataJson);
