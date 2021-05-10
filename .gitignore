@@ -5,4 +5,5 @@
 *.map
 *.env
 *.env-local
-*dist
+/dist
+/**/dist
