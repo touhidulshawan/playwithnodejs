@@ -1,10 +1,15 @@
+import path from "path";
 import express from "express";
 
 const app = express();
 
+const publicFolderDirectory = path.join(__dirname, "../public");
+
+app.use(express.static(publicFolderDirectory));
+
 // root path
 app.get("/", (req, res) => {
-  res.send("<p>Send From Web Server [Home page]</p>");
+  res.send();
 });
 
 // about page
