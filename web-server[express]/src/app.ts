@@ -2,13 +2,12 @@ import path from "path";
 import express from "express";
 
 const app = express();
+const publicFolderDirectory = path.join(__dirname, "../public");
+const viewsPath = path.join(__dirname, "../templates");
 
 // set view engine
-app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "hbs");
-
-const publicFolderDirectory = path.join(__dirname, "../public");
-
+app.set("views", viewsPath);
 // root path - load index.html file when web page serve
 app.use(express.static(publicFolderDirectory));
 
