@@ -1,13 +1,16 @@
 import path from "path";
 import express from "express";
+import hbs from "hbs";
 
 const app = express();
 const publicFolderDirectory = path.join(__dirname, "../public");
-const viewsPath = path.join(__dirname, "../templates");
+const viewsPath = path.join(__dirname, "../templates/views");
+const partialPath = path.join(__dirname, "../templates/partials");
 
 // set view engine
 app.set("view engine", "hbs");
 app.set("views", viewsPath);
+hbs.registerPartials(partialPath);
 // root path - load index.html file when web page serve
 app.use(express.static(publicFolderDirectory));
 
