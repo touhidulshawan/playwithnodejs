@@ -13,7 +13,10 @@ const publicFolderDirectory = path.join(__dirname, "../public");
 app.use(express.static(publicFolderDirectory));
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", {
+    title: "DEV",
+    name: "Touhidul Shawan",
+  });
 });
 
 app.get("/about", (req, res) => {
