@@ -37,6 +37,32 @@ app.get("/service", (req, res) => {
     domain: "dev.com",
   });
 });
+
+app.get("/blogs", (req, res) => {
+  res.render("blogs", {
+    title: "About",
+    name: "Touhidul Shawan",
+    domain: "dev.com",
+  });
+});
+
+app.get("/blogs/*", (req, res) => {
+  res.render("404", {
+    title: "404 | not found",
+    name: "Touhidul Shawan",
+    domain: "dev.com",
+    errorMessage: "404 | Blog Not Found",
+  });
+});
+
+app.get("*", (req, res) => {
+  res.render("404", {
+    title: "404 | not found",
+    name: "Touhidul Shawan",
+    domain: "dev.com",
+    errorMessage: "404 | Page Not Found",
+  });
+});
 app.listen("3000", () => {
   console.log("Server is running on port 3000");
 });
