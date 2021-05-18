@@ -18,15 +18,24 @@ app.get("/", (req, res) => {
   res.render("index", {
     title: "DEV",
     name: "Touhidul Shawan",
+    domain: "dev.com",
   });
 });
 
 app.get("/about", (req, res) => {
-  res.render("about");
+  res.render("about", {
+    title: "About",
+    name: "Touhidul Shawan",
+    domain: "dev.com",
+  });
 });
 
 app.get("/service", (req, res) => {
-  res.render("service");
+  res.render("service", {
+    title: "About",
+    name: "Touhidul Shawan",
+    domain: "dev.com",
+  });
 });
 app.listen("3000", () => {
   console.log("Server is running on port 3000");
