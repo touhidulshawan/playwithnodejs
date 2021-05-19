@@ -15,7 +15,6 @@ export const getWeatherData = async (cityName: any) => {
     };
     return getData;
   } catch (err) {
-    // console.log("Something Wrong!! Try again later.");
-    console.log(err);
+    console.log("Something Wrong!! Try again later.");
   }
 };
