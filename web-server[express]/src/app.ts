@@ -1,3 +1,4 @@
+import { getWeatherData } from "./utils/getWeatherData";
 import path from "path";
 import express from "express";
 import hbs from "hbs";
@@ -53,6 +54,21 @@ app.get("/blogs/*", (req, res) => {
     domain: "dev.com",
     errorMessage: "404 | Blog Not Found",
   });
+});
+
+app.get("/weather", async (req, res) => {
+  if (!req.query.location) {
+    return res.send({
+      error: "You must give an address",
+    });
+  }
+  const data = await getWeatherData(req.query.location);
+  if (!data) {
+    return res.send({
+      error: "404 | City not found",
+    });
+  }
+  res.send(data);
 });
 
 app.get("*", (req, res) => {
