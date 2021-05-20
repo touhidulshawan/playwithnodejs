@@ -20,7 +20,6 @@ export const getWeatherData = async (cityName: any) => {
       `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${process.env.WEATHER_API_KEY}&units=metric`
     );
     const data = await response.data;
-    console.log(data);
     getData = {
       forecast: data.weather[0].description,
       cityName: data.name,
