@@ -68,11 +68,12 @@ app.get("/weather", async (req, res) => {
       error: "404 | City not found",
     });
   }
-  res.send(data);
   res.render("weather", {
     title: "Weather",
     name: "Touhidul Shawan",
     domain: "dev.com",
+    forecast: data.forecast,
+    cityName: data.cityName,
   });
 });
 
