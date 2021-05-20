@@ -67,7 +67,6 @@ app.get("/weather", (req, res) => {
 
 app.post("/weather", async (req, res) => {
   const cityName = req.body.cityName;
-  console.log(cityName);
   const data = await getWeatherData(cityName);
   if (!data) {
     return res.render("404", {
