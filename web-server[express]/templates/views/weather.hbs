@@ -11,11 +11,16 @@
 
 <body>
     {{>header}}
-    <h1 style="margin-bottom: 20px; border-bottom: 2px solid #EBCB8B
-;">Weather</h1>
-    <div class="weather__stat">
-        <h4 class="forecast">Forecast: {{forecast}}</h4>
-        <p class="cityName">Current City: {{cityName}}</p>
+    <div class="container">
+        <h1 class="weather__heading">Weather</h1>
+        <form id="weather__form" action="/weather" method="POST">
+            <input value="" type="text" name="cityName" id="cityName" placeholder="Enter city name" required>
+            <button type="submit">Search</button>
+        </form>
+        <div class="weather__stat">
+            <p class="forecast">{{forecast}}</p>
+            <p class="temp">{{message}}</p>
+        </div>
     </div>
     {{>footer}}
 </body>

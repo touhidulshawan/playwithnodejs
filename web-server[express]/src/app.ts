@@ -14,6 +14,7 @@ app.set("views", viewsPath);
 hbs.registerPartials(partialPath);
 // root path - load index.html file when web page serve
 app.use(express.static(publicFolderDirectory));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.render("index", {
@@ -56,24 +57,29 @@ app.get("/blogs/*", (req, res) => {
   });
 });
 
-app.get("/weather", async (req, res) => {
-  if (!req.query.location) {
-    return res.send({
-      error: "You must give an address",
-    });
-  }
-  const data = await getWeatherData(req.query.location);
-  if (!data) {
-    return res.send({
-      error: "404 | City not found",
-    });
-  }
+app.get("/weather", (req, res) => {
   res.render("weather", {
     title: "Weather",
     name: "Touhidul Shawan",
     domain: "dev.com",
+  });
+});
+
+app.post("/weather", async (req, res) => {
+  const cityName = req.body.cityName;
+  console.log(cityName);
+  const data = await getWeatherData(cityName);
+  if (!data) {
+    return res.render("404", {
+      title: "404 | not found",
+      name: "Touhidul Shawan",
+      domain: "dev.com",
+      errorMessage: "404 | City Not Found",
+    });
+  }
+  res.render("weather", {
     forecast: data.forecast,
-    cityName: data.cityName,
+    message: `It is currently ${data.currentTemp} degrees out there.`,
   });
 });
 
