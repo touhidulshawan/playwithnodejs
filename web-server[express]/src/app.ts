@@ -69,6 +69,11 @@ app.get("/weather", async (req, res) => {
     });
   }
   res.send(data);
+  res.render("weather", {
+    title: "Weather",
+    name: "Touhidul Shawan",
+    domain: "dev.com",
+  });
 });
 
 app.get("*", (req, res) => {
