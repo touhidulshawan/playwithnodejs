@@ -1,7 +1,10 @@
 {
   "name": "web-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Dummy Weather app",
+  "engines": {
+    "node": "16.x"
+  },
   "main": "./dist/app.js",
   "scripts": {
     "dev": "nodemon dist/app.js -e js,hbs",
