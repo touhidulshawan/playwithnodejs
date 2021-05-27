@@ -79,6 +79,9 @@ app.post("/weather", async (req, res) => {
   res.render("weather", {
     forecast: data.forecast,
     message: `It is currently ${data.currentTemp} degrees out there.`,
+    title: "Weather",
+    name: "Touhidul Shawan",
+    domain: "dev.com",
   });
 });
 
