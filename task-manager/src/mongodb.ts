@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
-
-const connectionURL = "mongodb://127.0.0.1:27017";
+const username = "touhidulshawan";
+const password = "shawan96";
+const connectionURL = `mongodb://${username}:${password}@127.0.0.1:27017/`;
 const databaseName = "task-manager";
 
 MongoClient.connect(
