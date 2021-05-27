@@ -7,6 +7,7 @@ const app = express();
 const publicFolderDirectory = path.join(__dirname, "../public");
 const viewsPath = path.join(__dirname, "../templates/views");
 const partialPath = path.join(__dirname, "../templates/partials");
+const port = process.env.PORT || 3000;
 
 // set view engine
 app.set("view engine", "hbs");
@@ -93,6 +94,6 @@ app.get("*", (req, res) => {
     errorMessage: "404 | Page Not Found",
   });
 });
-app.listen("3000", () => {
-  console.log("Server is running on port 3000");
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
