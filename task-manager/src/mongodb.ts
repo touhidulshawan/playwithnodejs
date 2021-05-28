@@ -24,23 +24,45 @@ MongoClient.connect(
     // );
 
     // insert multiple data to users collection
-    db.collection("users").insertMany(
+    // db.collection("users").insertMany(
+    //   [
+    //     {
+    //       name: "Shrabon",
+    //       age: 24,
+    //     },
+    //     {
+    //       name: "Mike",
+    //       age: 28,
+    //     },
+    //     {
+    //       name: "John",
+    //       age: 32,
+    //     },
+    //   ],
+    //   (error, result) => {
+    //     if (error) return console.log("unable to insert users");
+    //     console.log(result.ops);
+    //   }
+    // );
+
+    // insert multiple data into tasks collection
+    db.collection("tasks").insertMany(
       [
         {
-          name: "Shrabon",
-          age: 24,
+          description: "Do the homework",
+          completed: false,
         },
         {
-          name: "Mike",
-          age: 28,
+          description: "Buy some foods",
+          completed: true,
         },
         {
-          name: "John",
-          age: 32,
+          description: "Go to gym",
+          completed: false,
         },
       ],
       (error, result) => {
-        if (error) return console.log("unable to insert users");
+        if (error) return console.log("unable to insert task");
         console.log(result.ops);
       }
     );
