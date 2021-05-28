@@ -109,5 +109,26 @@ MongoClient.connect(
         if (error) return console.log("unable to fetch");
         console.log(tasks);
       });
+
+    // update a user that contain duplicate name
+
+    const updateUser = db.collection("users").updateOne(
+      {
+        _id: new ObjectID("60b04955f9593219f071f9dc"),
+      },
+      {
+        $set: {
+          name: "Tom",
+        },
+      }
+    );
+
+    updateUser
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 );
