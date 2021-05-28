@@ -156,5 +156,16 @@ MongoClient.connect(
         console.log(result.deletedCount);
       }
     );
+
+    // delete single user from users collection by id
+    db.collection("users").deleteOne(
+      {
+        _id: new ObjectID("60b04af1e4f42d21d9ad6c7c"),
+      },
+      (error, result) => {
+        if (error) return console.log("unable to delete datat");
+        console.log(result.deletedCount);
+      }
+    );
   }
 );
