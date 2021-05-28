@@ -129,22 +129,32 @@ MongoClient.connect(
     //     });
 
     // update all incomplete task to completed
-    db.collection("tasks")
-      .updateMany(
-        {
-          completed: false,
-        },
-        {
-          $set: {
-            completed: true,
-          },
-        }
-      )
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    //   db.collection("tasks")
+    //     .updateMany(
+    //       {
+    //         completed: false,
+    //       },
+    //       {
+    //         $set: {
+    //           completed: true,
+    //         },
+    //       }
+    //     )
+    //     .then((result) => {
+    //       console.log(result);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // delete user from users collection where age equal 25
+    db.collection("users").deleteMany(
+      {
+        age: 25,
+      },
+      (error, result) => {
+        if (error) return console.log("unable to delete data");
+        console.log(result.deletedCount);
+      }
+    );
   }
 );
