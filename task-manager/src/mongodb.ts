@@ -102,5 +102,12 @@ MongoClient.connect(
         console.log(task);
       }
     );
+    // fetch documents from tasks collection based on it is completed or not
+    db.collection("tasks")
+      .find({ completed: false })
+      .toArray((error, tasks) => {
+        if (error) return console.log("unable to fetch");
+        console.log(tasks);
+      });
   }
 );
