@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectID } from "mongodb";
 const username = "touhidulshawan";
 const password = "shawan96";
 const connectionURL = `mongodb://${username}:${password}@127.0.0.1:27017/`;
@@ -46,24 +46,42 @@ MongoClient.connect(
     // );
 
     // insert multiple data into tasks collection
-    db.collection("tasks").insertMany(
-      [
-        {
-          description: "Do the homework",
-          completed: false,
-        },
-        {
-          description: "Buy some foods",
-          completed: true,
-        },
-        {
-          description: "Go to gym",
-          completed: false,
-        },
-      ],
-      (error, result) => {
-        if (error) return console.log("unable to insert task");
-        console.log(result.ops);
+
+    // db.collection("tasks").insertMany(
+    //   [
+    //     {
+    //       description: "Do the homework",
+    //       completed: false,
+    //     },
+    //     {
+    //       description: "Buy some foods",
+    //       completed: true,
+    //     },
+    //     {
+    //       description: "Go to gym",
+    //       completed: false,
+    //     },
+    //   ],
+    //   (error, result) => {
+    //     if (error) return console.log("unable to insert task");
+    //     console.log(result.ops);
+    //   }
+    // );
+
+    // fetch 1 document from users collection by name
+
+    db.collection("users").findOne({ name: "Shrabon" }, (error, user) => {
+      if (error) return console.log("unable to fetch");
+      console.log(user);
+    });
+
+    // fetch 1 document from users collection by id
+
+    db.collection("users").findOne(
+      { _id: new ObjectID("60afde3c22ef69bb22a23a56") },
+      (error, user) => {
+        if (error) return console.log("unable to fetch");
+        console.log(user);
       }
     );
   }
