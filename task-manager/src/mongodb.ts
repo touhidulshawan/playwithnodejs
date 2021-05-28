@@ -93,5 +93,14 @@ MongoClient.connect(
         if (error) return console.log("unable to fetch");
         console.log(users);
       });
+
+    // fetch 1 document from tasks collection by id
+    db.collection("tasks").findOne(
+      { _id: new ObjectID("60b04e69d0e8e5295c9ed320") },
+      (error, task) => {
+        if (error) return console.log("unable to fetch");
+        console.log(task);
+      }
+    );
   }
 );
