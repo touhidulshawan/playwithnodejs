@@ -1,4 +1,9 @@
-import { connect } from "mongoose";
+import { connect, model, Schema, Model, Document } from "mongoose";
+
+interface IUser extends Document {
+  name: string;
+  age: number;
+}
 
 const username = "touhidulshawan";
 const password = "shawan96";
@@ -11,3 +16,12 @@ connect(connectionURL, {
   useFindAndModify: true,
   useCreateIndex: true,
 });
+
+// create a User Schema
+const UserSchema: Schema = new Schema({
+  name: { type: String, required: true },
+  age: { type: Number, required: true },
+});
+
+// create a User Model
+const User: Model<IUser> = model("User", UserSchema);
