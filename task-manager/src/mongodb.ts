@@ -112,18 +112,17 @@ MongoClient.connect(
 
     // update a user that contain duplicate name
 
-    const updateUser = db.collection("users").updateOne(
-      {
-        _id: new ObjectID("60b04955f9593219f071f9dc"),
-      },
-      {
-        $set: {
-          name: "Tom",
+    db.collection("users")
+      .updateOne(
+        {
+          _id: new ObjectID("60b04955f9593219f071f9dc"),
         },
-      }
-    );
-
-    updateUser
+        {
+          $set: {
+            name: "Tom",
+          },
+        }
+      )
       .then((result) => {
         console.log(result);
       })
