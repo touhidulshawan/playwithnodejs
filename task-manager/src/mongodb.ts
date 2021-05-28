@@ -84,5 +84,14 @@ MongoClient.connect(
         console.log(user);
       }
     );
+
+    // fetch multiple document from users collection based on age
+
+    db.collection("users")
+      .find({ age: 25 })
+      .toArray((error, users) => {
+        if (error) return console.log("unable to fetch");
+        console.log(users);
+      });
   }
 );
