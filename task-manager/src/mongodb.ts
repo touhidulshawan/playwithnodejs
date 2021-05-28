@@ -112,14 +112,31 @@ MongoClient.connect(
 
     // update a user that contain duplicate name
 
-    db.collection("users")
-      .updateOne(
+    //  db.collection("users").updateOne(
+    //     {
+    //       _id: new ObjectID("60b04955f9593219f071f9dc"),
+    //     },
+    //     {
+    //       $set: {
+    //         name: "Tom",
+    //       },
+    //     }
+    //   ).then((result) => {
+    //       console.log(result);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+
+    // update all incomplete task to completed
+    db.collection("tasks")
+      .updateMany(
         {
-          _id: new ObjectID("60b04955f9593219f071f9dc"),
+          completed: false,
         },
         {
           $set: {
-            name: "Tom",
+            completed: true,
           },
         }
       )
