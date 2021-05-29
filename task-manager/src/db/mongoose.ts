@@ -33,7 +33,15 @@ const connectToDB = async () => {
 
 const UserSchema: Schema = new Schema({
   name: { type: String, required: true },
-  age: { type: Number, required: true },
+  age: {
+    type: Number,
+    required: true,
+    validate(value: Number) {
+      if (value < 0) {
+        throw new Error("Age must be a positive number");
+      }
+    },
+  },
 });
 
 // TODO: CREATE A SCHEMA OF TASK
@@ -72,10 +80,10 @@ connectToDB()
   .then(() => console.log("connected Successfully"))
   .catch((error) => console.log("unable to connect" + error));
 
-insertUser("Tom", 28)
+insertUser("Mike", -28)
   .then(() => console.log("Data inserted successfully"))
   .catch((err) => console.log("unable to insert user data" + err));
 
-insertTask("Buy Some Foods", false)
-  .then(() => console.log("Data inserted successfully"))
-  .catch((err) => console.log("unable to insert task data" + err));
+// insertTask("Buy Some Foods", false)
+//   .then(() => console.log("Data inserted successfully"))
+//   .catch((err) => console.log("unable to insert task data" + err));
