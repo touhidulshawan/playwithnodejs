@@ -19,7 +19,6 @@ const connectToDB = async () => {
       useFindAndModify: true,
       useCreateIndex: true,
     });
-    console.log("Connected to database :)");
   } catch (err) {
     console.log(err.stack);
     process.exit(1);
@@ -45,11 +44,10 @@ const insertUser = async () => {
     });
 
     await user.save();
-    console.log("Data inserted successfully");
   } catch (err) {
     console.log("Can not insert data to database");
   }
 };
 
-connectToDB();
-insertUser();
+connectToDB().then(() => console.log("connected Successfully"));
+insertUser().then(()=> console.log("Data inserted successfully"));
