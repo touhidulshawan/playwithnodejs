@@ -50,31 +50,32 @@ const User: Model<IUser> = model("User", UserSchema);
 const Task: Model<ITask> = model("Task", TaskSchema);
 
 // TODO: CREATE A INSTANCE OF USER MODEL AND INSERT DATA AND SAVE DATA
-const insertUser = async () => {
-  try {
-    const user: IUser = await User.create({
-      name: "Touhidul Shawan",
-      age: 25,
-    });
+const insertUser = async (name: string, age: number) => {
+  const user: IUser = await User.create({
+    name,
+    age,
+  });
 
-    await user.save();
-  } catch (err) {
-    console.log("Can not insert data to database");
-  }
+  await user.save();
 };
 
 // TODO: CREATE A INSTANCE OF TASK MODEL AND INSERT DATA AND SAVE DATA
-const insertTask = async () => {
-  try {
-    const task: ITask = await Task.create({
-      description: "Do the Homework",
-      completed: "false",
-    });
-  } catch (err) {
-    console.log(err);
-  }
+const insertTask = async (description: string, completed: boolean) => {
+  const task: ITask = await Task.create({
+    description,
+    completed,
+  });
+  await task.save();
 };
 
-connectToDB().then(() => console.log("connected Successfully"));
-// insertUser().then(() => console.log("Data inserted successfully"));
-insertTask().then(() => console.log("Data inserted successfully"));
+connectToDB()
+  .then(() => console.log("connected Successfully"))
+  .catch((error) => console.log("unable to connect" + error));
+
+insertUser("Tom", 28)
+  .then(() => console.log("Data inserted successfully"))
+  .catch((err) => console.log("unable to insert user data" + err));
+
+insertTask("Buy Some Foods", false)
+  .then(() => console.log("Data inserted successfully"))
+  .catch((err) => console.log("unable to insert task data" + err));
