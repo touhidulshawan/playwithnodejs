@@ -5,10 +5,12 @@
   "license": "MIT",
   "dependencies": {
     "mongodb": "^3.6.9",
-    "mongoose": "^5.12.11"
+    "mongoose": "^5.12.11",
+    "validatorjs": "^3.22.1"
   },
   "devDependencies": {
     "@types/mongodb": "^3.6.16",
-    "@types/mongoose": "^5.10.5"
+    "@types/mongoose": "^5.10.5",
+    "@types/validatorjs": "^3.15.0"
   }
 }
