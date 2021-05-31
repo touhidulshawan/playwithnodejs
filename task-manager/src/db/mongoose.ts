@@ -66,8 +66,8 @@ const UserSchema: Schema = new Schema({
 
 // TODO: CREATE A SCHEMA OF TASK
 const TaskSchema: Schema = new Schema({
-  description: { type: String, required: true },
-  completed: { type: Boolean, required: true },
+  description: { type: String, required: true, trim: true },
+  completed: { type: Boolean, default: false },
 });
 
 // TODO: CREATE A MODEL OF USER
@@ -95,7 +95,7 @@ const insertUser = async (
 };
 
 // TODO: CREATE A INSTANCE OF TASK MODEL AND INSERT DATA AND SAVE DATA
-const insertTask = async (description: string, completed: boolean) => {
+const insertTask = async (description: string, completed?: boolean) => {
   const task: ITask = await Task.create({
     description,
     completed,
@@ -107,10 +107,10 @@ connectToDB()
   .then(() => console.log("connected Successfully"))
   .catch((error) => console.log("unable to connect" + error));
 
-insertUser("Mike", "mike@gmail.com", "mike1996@", 20)
-  .then(() => console.log("Data inserted successfully"))
-  .catch((err) => console.log(err));
-
-// insertTask("Buy Some Foods", false)
+// insertUser("Mike", "mike@gmail.com", "mike1996@", 20)
 //   .then(() => console.log("Data inserted successfully"))
-//   .catch((err) => console.log("unable to insert task data" + err));
+//   .catch((err) => console.log(err));
+
+insertTask("    Visit a place   ")
+  .then(() => console.log("Data inserted successfully"))
+  .catch((err) => console.log("unable to insert task data" + err));
