@@ -48,7 +48,7 @@ const UserSchema: Schema = new Schema({
     trim: true,
     minlength: 7,
     validate(value: string) {
-      if (value.includes("password")) {
+      if (value.toLowerCase().includes("password")) {
         throw new Error("Password can not contain word password");
       }
     },
