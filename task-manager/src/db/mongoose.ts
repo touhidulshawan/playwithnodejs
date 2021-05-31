@@ -107,7 +107,7 @@ connectToDB()
   .then(() => console.log("connected Successfully"))
   .catch((error) => console.log("unable to connect" + error));
 
-insertUser("Mike", "mike@gmail.com", "password", 20)
+insertUser("Mike", "mike@gmail.com", "mike1996@", 20)
   .then(() => console.log("Data inserted successfully"))
   .catch((err) => console.log(err));
 
