@@ -34,15 +34,26 @@ app.get("/users", async (req, res) => {
 // get a single user data by ID
 
 app.get("/users/:userID", async (req, res) => {
-  const _id = req.params.userID;
   try {
-    const user = await User.findById(_id);
+    const user = await User.findById(req.params.userID);
     !user ? res.status(404).send() : res.send(user);
   } catch (error) {
     res.status(500).send();
   }
 });
 
+// update a user by id
+app.patch("/users/:userID", async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.userID, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    !user ? res.status(404).send() : res.send(user);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 // post of task data
 
 app.post("/tasks", async (req, res) => {
