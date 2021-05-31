@@ -83,11 +83,23 @@ app.get("/tasks", async (req, res) => {
 
 // get task data from tasks
 app.get("/tasks/:taskID", async (req, res) => {
-  const _id = req.params.taskID;
   try {
-    const task = await Task.findById(_id);
+    const task = await Task.findById(req.params.taskID);
     !task ? res.status(404).send() : res.send(task);
   } catch (error) {
     res.status(500).send();
+  }
+});
+
+// update a task
+app.patch("/tasks/:taskID", async (req, res) => {
+  try {
+    const task = await Task.findByIdAndUpdate(req.params.taskID, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    !task ? res.status(404).send() : res.send(task);
+  } catch (error) {
+    res.status(404).send(error);
   }
 });
