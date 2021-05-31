@@ -44,6 +44,15 @@ app.get("/users/:userID", async (req, res) => {
 
 // update a user by id
 app.patch("/users/:userID", async (req, res) => {
+  const updateProperty = Object.keys(req.body);
+  const allowUpdateProperty = ["name", "email", "password", "age"];
+  const isValidUpdateOperation = updateProperty.every((property) =>
+    allowUpdateProperty.includes(property)
+  );
+  if (!isValidUpdateOperation) {
+    return res.status(400).send({ error: "Invalid update property" });
+  }
+
   try {
     const user = await User.findByIdAndUpdate(req.params.userID, req.body, {
       new: true,
@@ -93,6 +102,16 @@ app.get("/tasks/:taskID", async (req, res) => {
 
 // update a task
 app.patch("/tasks/:taskID", async (req, res) => {
+  const updateProperty = Object.keys(req.body);
+  const allowUpdateProperty = ["description", "completed"];
+  const isValidUpdateOperation = updateProperty.every((property) =>
+    allowUpdateProperty.includes(property)
+  );
+
+  if (!isValidUpdateOperation) {
+    return res.status(400).send({ error: "Invalid update property" });
+  }
+
   try {
     const task = await Task.findByIdAndUpdate(req.params.taskID, req.body, {
       new: true,
