@@ -17,7 +17,7 @@ app.post("/users", async (req, res) => {
   } catch (error) {
     res.status(400).send(error);
   }
-  res.send(user);
+  res.status(201).send(user);
 });
 
 // post of task data
@@ -30,7 +30,7 @@ app.post("/tasks", async (req, res) => {
   } catch (error) {
     res.status(400).send(error);
   }
-  res.send(task);
+  res.status(201).send(task);
 });
 
 app.listen(port, () => {
