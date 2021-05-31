@@ -11,7 +11,7 @@ export const connectToDB = async () => {
       authSource: "admin",
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useFindAndModify: true,
+      useFindAndModify: false,
       useCreateIndex: true,
     });
   } catch (err) {
