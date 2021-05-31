@@ -20,6 +20,29 @@ app.post("/users", async (req, res) => {
   res.status(201).send(user);
 });
 
+// get users data
+
+app.get("/users", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.send(users);
+  } catch (e) {
+    res.status(500).send();
+  }
+});
+
+// get a single user data by ID
+
+app.get("/users/:userID", async (req, res) => {
+  const _id = req.params.userID;
+  try {
+    const user = await User.findById(_id);
+    !user ? res.status(404).send() : res.send(user);
+  } catch (error) {
+    res.status(500).send();
+  }
+});
+
 // post of task data
 
 app.post("/tasks", async (req, res) => {
@@ -35,4 +58,25 @@ app.post("/tasks", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`App is running on localhost:${port}`);
+});
+
+// get tasks data
+app.get("/tasks", async (req, res) => {
+  try {
+    const tasks = await Task.find({});
+    res.send(tasks);
+  } catch (error) {
+    res.status(500).send();
+  }
+});
+
+// get task data from tasks
+app.get("/tasks/:taskID", async (req, res) => {
+  const _id = req.params.taskID;
+  try {
+    const task = await Task.findById(_id);
+    !task ? res.status(404).send() : res.send(task);
+  } catch (error) {
+    res.status(500).send();
+  }
 });
