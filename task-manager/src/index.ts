@@ -14,8 +14,8 @@ app.post("/users", async (req, res) => {
 
   try {
     await user.save();
-  } catch (err) {
-    res.send(err);
+  } catch (error) {
+    res.status(400).send(error);
   }
   res.send(user);
 });
@@ -28,7 +28,7 @@ app.post("/tasks", async (req, res) => {
   try {
     await task.save();
   } catch (error) {
-    res.send(error);
+    res.status(400).send(error);
   }
   res.send(task);
 });
