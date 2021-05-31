@@ -1,4 +1,5 @@
 import { connect, Document, model, Model, Schema } from "mongoose";
+import validator from "validator";
 
 interface IUser extends Document {
   name: string;
@@ -32,11 +33,30 @@ const connectToDB = async () => {
 // TODO: CREATE A SCHEMA OF USER
 
 const UserSchema: Schema = new Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, trim: true },
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    validate(value: string) {
+      if (!validator.isEmail(value)) throw new Error("Email is not valid");
+    },
+  },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 7,
+    validate(value: string) {
+      if (value.includes("password")) {
+        throw new Error("Password can not contain word password");
+      }
+    },
+  },
   age: {
     type: Number,
-    required: true,
-    validate(value: Number) {
+    default: 0,
+    validate(value: number) {
       if (value < 0) {
         throw new Error("Age must be a positive number");
       }
@@ -58,9 +78,16 @@ const User: Model<IUser> = model("User", UserSchema);
 const Task: Model<ITask> = model("Task", TaskSchema);
 
 // TODO: CREATE A INSTANCE OF USER MODEL AND INSERT DATA AND SAVE DATA
-const insertUser = async (name: string, age: number) => {
+const insertUser = async (
+  name: string,
+  email: string,
+  password: string,
+  age: number
+) => {
   const user: IUser = await User.create({
     name,
+    email,
+    password,
     age,
   });
 
@@ -80,9 +107,9 @@ connectToDB()
   .then(() => console.log("connected Successfully"))
   .catch((error) => console.log("unable to connect" + error));
 
-insertUser("Mike", -28)
+insertUser("Mike", "mike@gmail.com", "password", 20)
   .then(() => console.log("Data inserted successfully"))
-  .catch((err) => console.log("unable to insert user data" + err));
+  .catch((err) => console.log(err));
 
 // insertTask("Buy Some Foods", false)
 //   .then(() => console.log("Data inserted successfully"))
