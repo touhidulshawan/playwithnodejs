@@ -13,10 +13,8 @@ app.post("/users", async (req, res) => {
   try {
     await user.save();
   } catch (err) {
-    console.log(err);
+    res.send(err);
   }
-  console.log(req.body);
-
   res.send(user);
 });
 
