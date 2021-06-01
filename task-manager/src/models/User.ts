@@ -5,6 +5,8 @@ import {
   ReturnModelType,
   DocumentType,
   Ref,
+  modelOptions,
+  Severity,
 } from "@typegoose/typegoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
@@ -15,6 +17,7 @@ import jwt from "jsonwebtoken";
   if ((this.password = await bcrypt.hash(this.password, 8))) next();
 })
 // create a user model
+@modelOptions({ options: { allowMixed: Severity.ALLOW } })
 class User {
   @prop({ required: true, trim: true })
   public name!: string;
