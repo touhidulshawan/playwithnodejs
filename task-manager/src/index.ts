@@ -1,6 +1,4 @@
 import express from "express";
-import { User } from "./models/User";
-import { Task } from "./models/Task";
 import userRouter from "./routers/userRouter";
 import taskRouter from "./routers/taskRouter";
 require("./db/mongoose");
