@@ -4,7 +4,21 @@ import { UserModel as User } from "../models/User";
 
 const userRouter: Router = express.Router();
 
+// create a user
+
+userRouter.post("/users", async (req, res) => {
+  const user = new User(req.body);
+
+  try {
+    await user.save();
+  } catch (error) {
+    res.status(400).send(error);
+  }
+  res.status(201).send(user);
+});
+
 // user login route
+
 userRouter.post("/users/login", async (req, res) => {
   try {
     const user = await User.findByCredientials(
@@ -15,17 +29,6 @@ userRouter.post("/users/login", async (req, res) => {
   } catch (error) {
     res.status(404).send();
   }
-});
-// post of users data
-userRouter.post("/users", async (req, res) => {
-  const user = new User(req.body);
-
-  try {
-    await user.save();
-  } catch (error) {
-    res.status(400).send(error);
-  }
-  res.status(201).send(user);
 });
 
 // get users data
@@ -51,6 +54,7 @@ userRouter.get("/users/:userID", async (req, res) => {
 });
 
 // update a user by id
+
 userRouter.patch("/users/:userID", async (req, res) => {
   const updateProperty = Object.keys(req.body);
   const allowUpdateProperty = ["name", "email", "password", "age"];

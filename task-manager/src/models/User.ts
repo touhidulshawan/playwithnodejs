@@ -19,6 +19,7 @@ class User {
 
   @prop({
     required: true,
+    unique: true,
     trim: true,
     validate: {
       validator: (value: string) => {

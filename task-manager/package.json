@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon dist/index.js"
+    "dev": "fuser -n tcp -k 3000 && nodemon dist/index.js"
   },
   "dependencies": {
     "@typegoose/typegoose": "^7.6.1",
