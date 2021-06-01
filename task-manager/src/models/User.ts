@@ -1,8 +1,13 @@
-import { prop, getModelForClass } from "@typegoose/typegoose";
+import { prop, pre, getModelForClass } from "@typegoose/typegoose";
 import validator from "validator";
+import bcrypt from "bcryptjs";
+
+@pre<User>("save", async function (next) {
+  this.isModified("password");
+  if ((this.password = await bcrypt.hash(this.password, 8))) next();
+})
 
 // create a user model
-
 class User {
   @prop({ required: true, trim: true })
   public name!: string;
@@ -45,7 +50,6 @@ class User {
 }
 
 export const UserModel = getModelForClass(User);
-
 /*
 CODE WITHOUT TYPEGOOSE
  */
