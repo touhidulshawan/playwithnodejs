@@ -1,15 +1,16 @@
-import {prop, getModelForClass} from "@typegoose/typegoose"
+import { prop, getModelForClass } from "@typegoose/typegoose";
 
 class Task {
-  @prop({required: true, trim: true})
-  public description! : string
-  @prop({default: false})
-  public completed?: boolean
+  @prop({ required: true, trim: true })
+  public description!: string;
+  @prop({ default: false })
+  public completed?: boolean;
 }
-export const TaskModel = getModelForClass(Task)
+export const TaskModel = getModelForClass(Task);
+
 /*
 CODE WITH IMPLEMENTION OF TYPEGOOSE
-/*
+*/
 
 // import { Document, Model, Schema, model } from "mongoose";
 
@@ -23,4 +24,4 @@ CODE WITH IMPLEMENTION OF TYPEGOOSE
 //   completed: { type: Boolean, default: false },
 // });
 
-// export const Task: Model<ITask> = model("Task", TaskSchema);
+// export const Task: Model<ITask> = model("Task", TaskSchema)
