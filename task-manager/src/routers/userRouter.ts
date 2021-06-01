@@ -1,5 +1,6 @@
 import express, { Router } from "express";
-import { UserModel as User} from "../models/User";
+import bcrypt from "bcryptjs";
+import { UserModel as User } from "../models/User";
 
 const userRouter: Router = express.Router();
 // post of users data
@@ -47,9 +48,14 @@ userRouter.patch("/users/:userID", async (req, res) => {
     return res.status(400).send({ error: "Invalid update property" });
   }
 
+  // hasing password before update
+  const password: string = req.body.password;
+  if (password && !password.includes("password")) {
+    const hashedPass = await bcrypt.hash(password, 8);
+    req.body.password = hashedPass;
+  }
+
   try {
-    // const user = await User.findById(req.params.userID);
-    // updateProperty.forEach((update) => (user[update] = req.body[update]));
     const user = await User.findByIdAndUpdate(req.params.userID, req.body, {
       new: true,
       runValidators: true,
