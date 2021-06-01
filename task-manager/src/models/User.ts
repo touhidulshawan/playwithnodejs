@@ -3,15 +3,17 @@ import {
   pre,
   getModelForClass,
   ReturnModelType,
+  DocumentType,
+  Ref,
 } from "@typegoose/typegoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 @pre<User>("save", async function (next) {
   this.isModified("password");
   if ((this.password = await bcrypt.hash(this.password, 8))) next();
 })
-
 // create a user model
 class User {
   @prop({ required: true, trim: true })
@@ -54,6 +56,10 @@ class User {
   })
   public age?: number;
 
+  @prop({ required: true })
+  public tokens!: {}[];
+
+  // Model method
   public static async findByCredientials(
     this: ReturnModelType<typeof User>,
     email: string,
@@ -72,6 +78,15 @@ class User {
       throw new Error("unable to login");
     }
     return user;
+  }
+
+  // instance method
+  public async generateAuthToken(this: DocumentType<User>) {
+    const token = jwt.sign({ _id: this._id.toString() }, "myscreatkeyphrasse");
+    this.tokens = this.tokens.concat({ token });
+    await this.save();
+
+    return token;
   }
 }
 
