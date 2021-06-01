@@ -4,13 +4,13 @@ import {
   getModelForClass,
   ReturnModelType,
   DocumentType,
-  Ref,
   modelOptions,
   Severity,
 } from "@typegoose/typegoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { ObjectID } from "mongodb";
 
 @pre<User>("save", async function (next) {
   this.isModified("password");
@@ -86,7 +86,8 @@ class User {
   // instance method
   public async generateAuthToken(this: DocumentType<User>) {
     const token = jwt.sign({ _id: this._id.toString() }, "myscreatkeyphrasse");
-    this.tokens = this.tokens.concat({ token });
+    const _id = new ObjectID();
+    this.tokens = this.tokens.concat({ token, _id });
     await this.save();
 
     return token;

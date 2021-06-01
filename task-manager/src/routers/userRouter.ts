@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import bcrypt from "bcryptjs";
 import { UserModel as User } from "../models/User";
+import auth from "../middleware/auth";
 
 const userRouter: Router = express.Router();
 
@@ -35,7 +36,7 @@ userRouter.post("/users/login", async (req, res) => {
 
 // get users data
 
-userRouter.get("/users", async (req, res) => {
+userRouter.get("/users", auth, async (req, res) => {
   try {
     const users = await User.find({});
     res.send(users);
