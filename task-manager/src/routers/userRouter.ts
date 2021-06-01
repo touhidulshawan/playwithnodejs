@@ -3,6 +3,19 @@ import bcrypt from "bcryptjs";
 import { UserModel as User } from "../models/User";
 
 const userRouter: Router = express.Router();
+
+// user login route
+userRouter.post("/users/login", async (req, res) => {
+  try {
+    const user = await User.findByCredientials(
+      req.body.email,
+      req.body.password
+    );
+    res.send(user);
+  } catch (error) {
+    res.status(404).send();
+  }
+});
 // post of users data
 userRouter.post("/users", async (req, res) => {
   const user = new User(req.body);
