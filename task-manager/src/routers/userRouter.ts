@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { User } from "../models/User";
+import { UserModel as User} from "../models/User";
 
 const userRouter: Router = express.Router();
 // post of users data
@@ -48,6 +48,8 @@ userRouter.patch("/users/:userID", async (req, res) => {
   }
 
   try {
+    // const user = await User.findById(req.params.userID);
+    // updateProperty.forEach((update) => (user[update] = req.body[update]));
     const user = await User.findByIdAndUpdate(req.params.userID, req.body, {
       new: true,
       runValidators: true,
