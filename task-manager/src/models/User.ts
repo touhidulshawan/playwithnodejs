@@ -1,4 +1,9 @@
-import { prop, pre, getModelForClass } from "@typegoose/typegoose";
+import {
+  prop,
+  pre,
+  getModelForClass,
+  ReturnModelType,
+} from "@typegoose/typegoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 
@@ -47,6 +52,26 @@ class User {
     },
   })
   public age?: number;
+
+  public static async findByCredientials(
+    this: ReturnModelType<typeof User>,
+    email: string,
+    password: string
+  ) {
+    // find user from db using email
+    const user = this.findOne({ email });
+
+    if (!user) {
+      throw new Error("unable to login");
+    }
+    // match password with user password and db stored hash password
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      throw new Error("unable to login");
+    }
+    return user;
+  }
 }
 
 export const UserModel = getModelForClass(User);
