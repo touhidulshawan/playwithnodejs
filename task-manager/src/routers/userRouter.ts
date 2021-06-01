@@ -27,7 +27,7 @@ userRouter.post("/users/login", async (req, res) => {
     );
     res.send(user);
   } catch (error) {
-    res.status(404).send();
+    res.status(400).send();
   }
 });
 
