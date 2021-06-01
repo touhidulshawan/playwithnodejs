@@ -60,7 +60,7 @@ class User {
     password: string
   ) {
     // find user from db using email
-    const user = this.findOne({ email });
+    const user = await this.findOne({ email });
 
     if (!user) {
       throw new Error("unable to login");
