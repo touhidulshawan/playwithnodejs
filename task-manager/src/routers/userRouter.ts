@@ -49,6 +49,18 @@ userRouter.post("/users/logout", auth, async (req: IRequest, res) => {
     res.status(500).send();
   }
 });
+
+// logout from all session for a user
+// @ts-ignore
+userRouter.post("/users/logoutAll", auth, async (req: IRequest, res) => {
+  try {
+    req.user.tokens = [];
+    await req.user.save();
+    res.send();
+  } catch (error) {
+    res.status(500).send();
+  }
+});
 // get profile data of a user
 
 //@ts-ignore
