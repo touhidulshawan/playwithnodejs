@@ -39,7 +39,6 @@ userRouter.post("/users/login", async (req, res) => {
 //@ts-ignore
 userRouter.get("/users/me", auth, async (req: IRequest, res) => {
   res.send(req.user);
-  console.log("showing profile");
 });
 
 // get a single user data by ID
