@@ -23,7 +23,7 @@ userRouter.post("/users", async (req, res) => {
 
 userRouter.post("/users/login", async (req, res) => {
   try {
-    const user = await User.findByCredientials(
+    const user = await User.findByCredentials(
       req.body.email,
       req.body.password
     );
@@ -32,10 +32,10 @@ userRouter.post("/users/login", async (req, res) => {
   } catch (error) {
     res.status(400).send();
   }
-  console.log("Logged In");
 });
 
 // get profile data of a user
+
 //@ts-ignore
 userRouter.get("/users/me", auth, async (req: IRequest, res) => {
   res.send(req.user);

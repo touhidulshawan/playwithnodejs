@@ -1,10 +1,10 @@
 import {
-  prop,
-  pre,
-  getModelForClass,
-  ReturnModelType,
   DocumentType,
+  getModelForClass,
   modelOptions,
+  pre,
+  prop,
+  ReturnModelType,
   Severity,
 } from "@typegoose/typegoose";
 import validator from "validator";
@@ -13,8 +13,11 @@ import jwt from "jsonwebtoken";
 import { ObjectID } from "mongodb";
 
 @pre<User>("save", async function (next) {
-  this.isModified("password");
-  if ((this.password = await bcrypt.hash(this.password, 8))) next();
+  const user = this;
+  if (user.isModified("password")) {
+    user.password = await bcrypt.hash(user.password, 8);
+  }
+  next();
 })
 // create a user model
 @modelOptions({ options: { allowMixed: Severity.ALLOW } })
@@ -63,20 +66,19 @@ class User {
   public tokens!: {}[];
 
   // Model method
-  public static async findByCredientials(
+  public static async findByCredentials(
     this: ReturnModelType<typeof User>,
     email: string,
     password: string
   ) {
     // find user from db using email
     const user = await this.findOne({ email });
-
     if (!user) {
       throw new Error("unable to login");
     }
+
     // match password with user password and db stored hash password
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
       throw new Error("unable to login");
     }
