@@ -34,6 +34,21 @@ userRouter.post("/users/login", async (req, res) => {
   }
 });
 
+// user logout route
+//@ts-ignore
+userRouter.post("/users/logout", auth, async (req: IRequest, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter(
+      (token: { _id: string; token: string }) => {
+        return token.token !== req.token;
+      }
+    );
+    await req.user.save();
+    res.send();
+  } catch (error) {
+    res.status(500).send();
+  }
+});
 // get profile data of a user
 
 //@ts-ignore
