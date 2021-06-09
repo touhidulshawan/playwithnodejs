@@ -1,7 +1,7 @@
 import express, { Router } from "express";
 import bcrypt from "bcryptjs";
 import { UserModel as User } from "../models/User";
-import auth from "../middleware/auth";
+import auth, { IRequest } from "../middleware/auth";
 
 const userRouter: Router = express.Router();
 
@@ -32,17 +32,14 @@ userRouter.post("/users/login", async (req, res) => {
   } catch (error) {
     res.status(400).send();
   }
+  console.log("Logged In");
 });
 
-// get users data
-
-userRouter.get("/users", auth, async (req, res) => {
-  try {
-    const users = await User.find({});
-    res.send(users);
-  } catch (e) {
-    res.status(500).send();
-  }
+// get profile data of a user
+//@ts-ignore
+userRouter.get("/users/me", auth, async (req: IRequest, res) => {
+  res.send(req.user);
+  console.log("showing profile");
 });
 
 // get a single user data by ID
@@ -68,11 +65,10 @@ userRouter.patch("/users/:userID", async (req, res) => {
     return res.status(400).send({ error: "Invalid update property" });
   }
 
-  // hasing password before update
+  // hashing password before update
   const password: string = req.body.password;
   if (password && !password.includes("password")) {
-    const hashedPass = await bcrypt.hash(password, 8);
-    req.body.password = hashedPass;
+    req.body.password = await bcrypt.hash(password, 8);
   }
 
   try {

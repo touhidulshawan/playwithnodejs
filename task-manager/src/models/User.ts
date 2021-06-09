@@ -85,10 +85,11 @@ class User {
 
   // instance method
   public async generateAuthToken(this: DocumentType<User>) {
-    const token = jwt.sign({ _id: this._id.toString() }, "myscreatkeyphrasse");
+    const user = this;
+    const token = jwt.sign({ _id: user._id.toString() }, "myscreatkeyphrasse");
     const _id = new ObjectID();
-    this.tokens = this.tokens.concat({ token, _id });
-    await this.save();
+    user.tokens = user.tokens.concat({ token, _id });
+    await user.save();
 
     return token;
   }

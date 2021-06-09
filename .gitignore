@@ -7,3 +7,5 @@
 *.env-local
 /dist
 /**/dist
+*.idea
+/**/.idea
