@@ -68,9 +68,9 @@ userRouter.get("/users/me", auth, async (req: IRequest, res) => {
   res.send(req.user);
 });
 
-// update a user by id
-
-userRouter.patch("/users/:userID", async (req, res) => {
+// update user profile by user
+//@ts-ignore
+userRouter.patch("/users/me", auth, async (req: IRequest, res) => {
   const updateProperty = Object.keys(req.body);
   const allowUpdateProperty = ["name", "email", "password", "age"];
   const isValidUpdateOperation = updateProperty.every((property) =>
@@ -80,24 +80,16 @@ userRouter.patch("/users/:userID", async (req, res) => {
     return res.status(400).send({ error: "Invalid update property" });
   }
 
-  // hashing password before update
-  const password: string = req.body.password;
-  if (password && !password.includes("password")) {
-    req.body.password = await bcrypt.hash(password, 8);
-  }
-
   try {
-    const user = await User.findByIdAndUpdate(req.params.userID, req.body, {
-      new: true,
-      runValidators: true,
-    });
-    !user ? res.status(404).send() : res.send(user);
+    updateProperty.forEach((update) => (req.user[update] = req.body[update]));
+    await req.user.save();
+    res.send(req.user);
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
-// user delete
+// delete user
 // @ts-ignore
 userRouter.delete("/users/me", auth, async (req: IRequest, res) => {
   try {

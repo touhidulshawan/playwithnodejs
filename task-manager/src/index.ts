@@ -1,6 +1,8 @@
 import express from "express";
 import userRouter from "./routers/userRouter";
 import taskRouter from "./routers/taskRouter";
+import bcrpt from "bcryptjs";
+
 require("./db/mongoose");
 
 const app = express();
