@@ -75,10 +75,13 @@ taskRouter.patch("/tasks/:taskID", auth, async (req: IRequest, res) => {
 });
 
 // delete a task by ID
-
-taskRouter.delete("/tasks/:taskID", async (req, res) => {
+//@ts-ignore
+taskRouter.delete("/tasks/:taskID", auth, async (req: IRequest, res) => {
   try {
-    const task = await Task.findByIdAndDelete(req.params.taskID);
+    const task = await Task.findOneAndDelete({
+      _id: req.params.taskID,
+      owner: req.user._id,
+    });
     !task ? res.status(404).send() : res.send(task);
   } catch (error) {
     res.status(500).send(error);
