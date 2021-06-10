@@ -82,7 +82,7 @@ class User {
     localField: "_id",
     foreignField: "owner",
   })
-  public taskOwner: Ref<Task>;
+  public task: Ref<Task>;
 
   // Model method
   public static async findByCredentials(

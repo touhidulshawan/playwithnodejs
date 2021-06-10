@@ -7,7 +7,6 @@ const taskRouter = express.Router();
 // post of task data
 //@ts-ignore
 taskRouter.post("/tasks", auth, async (req: IRequest, res) => {
-  // const task = new Task(req.body);
   const task = new Task({
     ...req.body,
     owner: req.user._id,
@@ -21,10 +20,11 @@ taskRouter.post("/tasks", auth, async (req: IRequest, res) => {
 });
 
 // get tasks data
-taskRouter.get("/tasks", async (req, res) => {
+//@ts-ignore
+taskRouter.get("/tasks", auth, async (req: IRequest, res) => {
   try {
-    const tasks = await Task.find({});
-    res.send(tasks);
+    await req.user.populate("task").execPopulate();
+    res.send(req.user.task);
   } catch (error) {
     res.status(500).send();
   }
@@ -43,7 +43,8 @@ taskRouter.get("/tasks/:taskID", auth, async (req: IRequest, res) => {
 });
 
 // update a task
-taskRouter.patch("/tasks/:taskID", async (req, res) => {
+//@ts-ignore
+taskRouter.patch("/tasks/:taskID", auth, async (req: IRequest, res) => {
   const updateProperty = Object.keys(req.body);
   const allowUpdateProperty = ["description", "completed"];
   const isValidUpdateOperation = updateProperty.every((property) =>
@@ -55,11 +56,19 @@ taskRouter.patch("/tasks/:taskID", async (req, res) => {
   }
 
   try {
-    const task = await Task.findByIdAndUpdate(req.params.taskID, req.body, {
-      new: true,
-      runValidators: true,
+    const task = await Task.findOne({
+      _id: req.params.taskID,
+      owner: req.user._id,
     });
-    !task ? res.status(404).send() : res.send(task);
+    if (!task) {
+      return res.status(404).send();
+    }
+    // @ts-ignore
+    allowUpdateProperty.forEach((update) => (task[update] = req.body[update]));
+    // console.log(task);
+    //@ts-ignore
+    await task.save();
+    res.send(task);
   } catch (error) {
     res.status(404).send(error);
   }

@@ -1,4 +1,9 @@
-import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
+import {
+  getModelForClass,
+  modelOptions,
+  pre,
+  prop,
+} from "@typegoose/typegoose";
 import { ObjectID } from "mongodb";
 
 @modelOptions({
@@ -6,6 +11,13 @@ import { ObjectID } from "mongodb";
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
   },
+})
+@pre<Task>("save", function (next) {
+  const task = this;
+  if (!task.isModified("completed")) {
+    task.completed = false;
+  }
+  next();
 })
 export class Task {
   @prop({ required: true, trim: true })
