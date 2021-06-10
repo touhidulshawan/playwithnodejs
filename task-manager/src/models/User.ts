@@ -20,7 +20,17 @@ import { ObjectID } from "mongodb";
   next();
 })
 // create a user model
-@modelOptions({ options: { allowMixed: Severity.ALLOW } })
+@modelOptions({
+  options: { allowMixed: Severity.ALLOW },
+  schemaOptions: {
+    toJSON: {
+      transform: function (doc, ret) {
+        delete ret.password;
+        delete ret.tokens;
+      },
+    },
+  },
+})
 class User {
   @prop({ required: true, trim: true })
   public name!: string;
