@@ -1,5 +1,4 @@
 import express, { Router } from "express";
-import bcrypt from "bcryptjs";
 import { UserModel as User } from "../models/User";
 import auth, { IRequest } from "../middleware/auth";
 
