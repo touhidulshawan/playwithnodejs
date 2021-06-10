@@ -1,13 +1,17 @@
 import express from "express";
 import { TaskModel as Task } from "./../models/Task";
+import auth, { IRequest } from "../middleware/auth";
 
 const taskRouter = express.Router();
 
 // post of task data
-
-taskRouter.post("/tasks", async (req, res) => {
-  const task = new Task(req.body);
-
+//@ts-ignore
+taskRouter.post("/tasks", auth, async (req: IRequest, res) => {
+  // const task = new Task(req.body);
+  const task = new Task({
+    ...req.body,
+    owner: req.user._id,
+  });
   try {
     await task.save();
   } catch (error) {
@@ -27,9 +31,11 @@ taskRouter.get("/tasks", async (req, res) => {
 });
 
 // get task data from tasks
-taskRouter.get("/tasks/:taskID", async (req, res) => {
+//@ts-ignore
+taskRouter.get("/tasks/:taskID", auth, async (req: IRequest, res) => {
+  const _id = req.params.taskID;
   try {
-    const task = await Task.findById(req.params.taskID);
+    const task = await Task.findOne({ _id, owner: req.user._id });
     !task ? res.status(404).send() : res.send(task);
   } catch (error) {
     res.status(500).send();

@@ -4,6 +4,7 @@ import {
   modelOptions,
   pre,
   prop,
+  Ref,
   ReturnModelType,
   Severity,
 } from "@typegoose/typegoose";
@@ -11,6 +12,7 @@ import validator from "validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { ObjectID } from "mongodb";
+import { Task } from "./Task";
 
 @pre<User>("save", async function (next) {
   const user = this;
@@ -74,6 +76,13 @@ class User {
 
   @prop({ required: true })
   public tokens!: {}[];
+
+  @prop({
+    ref: Task,
+    localField: "_id",
+    foreignField: "owner",
+  })
+  public taskOwner: Ref<Task>;
 
   // Model method
   public static async findByCredentials(

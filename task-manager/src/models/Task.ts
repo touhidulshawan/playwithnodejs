@@ -1,15 +1,25 @@
-import { prop, getModelForClass } from "@typegoose/typegoose";
+import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
+import { ObjectID } from "mongodb";
 
-class Task {
+@modelOptions({
+  schemaOptions: {
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
+  },
+})
+export class Task {
   @prop({ required: true, trim: true })
   public description!: string;
   @prop({ default: false })
   public completed?: boolean;
+  @prop({ required: true, ref: "User" })
+  public owner!: ObjectID;
 }
+
 export const TaskModel = getModelForClass(Task);
 
 /*
-CODE WITH IMPLEMENTION OF TYPEGOOSE
+CODE WITH IMPLEMENTATION OF TYPEGOOSE
 */
 
 // import { Document, Model, Schema, model } from "mongoose";
