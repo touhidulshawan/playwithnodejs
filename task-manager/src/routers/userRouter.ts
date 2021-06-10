@@ -68,17 +68,6 @@ userRouter.get("/users/me", auth, async (req: IRequest, res) => {
   res.send(req.user);
 });
 
-// get a single user data by ID
-
-userRouter.get("/users/:userID", async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userID);
-    !user ? res.status(404).send() : res.send(user);
-  } catch (error) {
-    res.status(500).send();
-  }
-});
-
 // update a user by id
 
 userRouter.patch("/users/:userID", async (req, res) => {
@@ -108,12 +97,12 @@ userRouter.patch("/users/:userID", async (req, res) => {
   }
 });
 
-// delete a user by id
-
-userRouter.delete("/users/:userID", async (req, res) => {
+// user delete
+// @ts-ignore
+userRouter.delete("/users/me", auth, async (req: IRequest, res) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.userID);
-    !user ? res.status(404).send() : res.send(user);
+    await req.user.remove();
+    res.send(req.user);
   } catch (error) {
     res.status(500).send(error);
   }
