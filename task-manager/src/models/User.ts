@@ -13,12 +13,19 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { ObjectID } from "mongodb";
 import { Task } from "./Task";
+import { TaskModel } from "./Task";
 
 @pre<User>("save", async function (next) {
   const user = this;
   if (user.isModified("password")) {
     user.password = await bcrypt.hash(user.password, 8);
   }
+  next();
+})
+// delete all Task that user created when user is being deleted
+@pre<User>("remove", async function (next) {
+  const user = this;
+  await TaskModel.deleteMany({ owner: user._id });
   next();
 })
 // create a user model
