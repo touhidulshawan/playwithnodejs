@@ -32,6 +32,7 @@ import { TaskModel } from "./Task";
 @modelOptions({
   options: { allowMixed: Severity.ALLOW },
   schemaOptions: {
+    timestamps: true,
     toJSON: {
       transform: function (doc, ret) {
         delete ret.password;

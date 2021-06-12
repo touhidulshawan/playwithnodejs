@@ -8,6 +8,7 @@ import { ObjectID } from "mongodb";
 
 @modelOptions({
   schemaOptions: {
+    timestamps: true,
     toObject: { virtuals: true },
     toJSON: { virtuals: true },
   },
