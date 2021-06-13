@@ -1,7 +1,7 @@
-import express, { Router } from "express";
+import express, { NextFunction, Request, Response, Router } from "express";
 import { UserModel as User } from "../models/User";
 import auth, { IRequest } from "../middleware/auth";
-import multer from "multer";
+import multer, { MulterError } from "multer";
 
 const userRouter: Router = express.Router();
 
@@ -118,8 +118,15 @@ const upload = multer({
   },
 });
 
-userRouter.post("/users/me/avatar", upload.single("avatar"), (req, res) => {
-  res.send({ success: "Profile avatar uploaded successfully" });
-});
+userRouter.post(
+  "/users/me/avatar",
+  upload.single("avatar"),
+  (req: Request, res: Response) => {
+    res.send({ success: "Profile avatar uploaded successfully" });
+  },
+  (error: MulterError, req: Request, res: Response, next: NextFunction) => {
+    res.status(400).send({ error: error.message });
+  }
+);
 
 export default userRouter;
