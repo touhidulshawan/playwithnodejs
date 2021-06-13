@@ -23,8 +23,15 @@ taskRouter.post("/tasks", auth, async (req: IRequest, res) => {
 //@ts-ignore
 taskRouter.get("/tasks", auth, async (req: IRequest, res) => {
   const match: { completed?: boolean } = {};
+  const sort: { createdAt?: number } = {};
   if (req.query.completed) {
     match.completed = req.query.completed === "true";
+  }
+  if (req.query.sortBy) {
+    //@ts-ignore
+    const parts = req.query.sortBy.split(":");
+    //@ts-ignore
+    sort[parts[0]] = parts[1] === "desc" ? -1 : 1;
   }
   try {
     await req.user
@@ -34,6 +41,7 @@ taskRouter.get("/tasks", auth, async (req: IRequest, res) => {
         options: {
           limit: parseInt(<string>req.query.limit),
           skip: parseInt(<string>req.query.skip),
+          sort,
         },
       })
       .execPopulate();
