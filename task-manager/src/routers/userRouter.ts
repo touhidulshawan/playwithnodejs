@@ -101,7 +101,7 @@ userRouter.delete("/users/me", auth, async (req: IRequest, res) => {
 });
 
 // upload user avatar image
-const upload = multer({ dest: "images" });
+const upload = multer({ dest: "avatars" });
 
 userRouter.post("/users/me/avatar", upload.single("avatar"), (req, res) => {
   res.send({ success: "Profile avatar uploaded successfully" });
