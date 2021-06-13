@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import { UserModel as User } from "../models/User";
 import auth, { IRequest } from "../middleware/auth";
+import multer from "multer";
 
 const userRouter: Router = express.Router();
 
@@ -97,6 +98,13 @@ userRouter.delete("/users/me", auth, async (req: IRequest, res) => {
   } catch (error) {
     res.status(500).send(error);
   }
+});
+
+// upload user avatar image
+const upload = multer({ dest: "images" });
+
+userRouter.post("/users/me/avatar", upload.single("avatar"), (req, res) => {
+  res.send({ success: "Profile avatar uploaded successfully" });
 });
 
 export default userRouter;
