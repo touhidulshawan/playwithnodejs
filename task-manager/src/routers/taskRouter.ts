@@ -22,8 +22,17 @@ taskRouter.post("/tasks", auth, async (req: IRequest, res) => {
 // get tasks data
 //@ts-ignore
 taskRouter.get("/tasks", auth, async (req: IRequest, res) => {
+  const match: { completed?: boolean } = {};
+  if (req.query.completed) {
+    match.completed = req.query.completed === "true";
+  }
   try {
-    await req.user.populate("task").execPopulate();
+    await req.user
+      .populate({
+        path: "task",
+        match,
+      })
+      .execPopulate();
     res.send(req.user.task);
   } catch (error) {
     res.status(500).send();
