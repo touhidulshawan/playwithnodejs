@@ -82,6 +82,9 @@ class User {
   })
   public age?: number;
 
+  @prop()
+  public avatar?: Buffer;
+
   @prop({ required: true })
   public tokens!: {}[];
 
