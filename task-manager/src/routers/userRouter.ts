@@ -101,7 +101,22 @@ userRouter.delete("/users/me", auth, async (req: IRequest, res) => {
 });
 
 // upload user avatar image
-const upload = multer({ dest: "avatars" });
+const upload = multer({
+  dest: "avatars",
+  limits: {
+    fileSize: 1000000,
+  },
+  fileFilter(
+    req: express.Request,
+    file: Express.Multer.File,
+    callback: multer.FileFilterCallback
+  ) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return callback(new Error("Please upload an image"));
+    }
+    callback(null, true);
+  },
+});
 
 userRouter.post("/users/me/avatar", upload.single("avatar"), (req, res) => {
   res.send({ success: "Profile avatar uploaded successfully" });
