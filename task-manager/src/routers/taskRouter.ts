@@ -31,6 +31,10 @@ taskRouter.get("/tasks", auth, async (req: IRequest, res) => {
       .populate({
         path: "task",
         match,
+        options: {
+          limit: parseInt(<string>req.query.limit),
+          skip: parseInt(<string>req.query.skip),
+        },
       })
       .execPopulate();
     res.send(req.user.task);
