@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express";
+import { DocumentType } from "@typegoose/typegoose";
 import jwt from "jsonwebtoken";
 import { UserModel as User } from "../models/User";
+import IUser from "../interfaces/IUser";
 
 export interface IRequest extends Request {
-  user: any;
+  user: DocumentType<IUser> | null;
   token: string;
 }
 
@@ -17,9 +19,7 @@ const auth = async (req: IRequest, res: Response, next: NextFunction) => {
       "tokens.token": token,
     });
 
-    if (!user) {
-      throw new Error();
-    }
+    if (!user) throw new Error();
     req.token = token;
     req.user = user;
     next();

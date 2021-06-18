@@ -69,7 +69,7 @@ class User {
       message: "Password can not contain word password",
     },
   })
-  private password!: string;
+  public password!: string;
 
   @prop({
     default: 0,
@@ -86,7 +86,7 @@ class User {
   public avatar?: Buffer;
 
   @prop({ required: true })
-  public tokens!: {}[];
+  public tokens!: Array<{ _id: ObjectID; token: string }>;
 
   @prop({
     ref: Task,

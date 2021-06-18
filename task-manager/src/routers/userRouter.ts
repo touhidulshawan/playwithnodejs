@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response, Router } from "express";
 import { UserModel as User } from "../models/User";
 import auth, { IRequest } from "../middleware/auth";
 import multer, { MulterError } from "multer";
+import { ObjectId } from "mongoose";
 
 const userRouter: Router = express.Router();
 
@@ -38,13 +39,13 @@ userRouter.post("/users/login", async (req, res) => {
 //@ts-ignore
 userRouter.post("/users/logout", auth, async (req: IRequest, res) => {
   try {
-    req.user.tokens = req.user.tokens.filter(
-      (token: { _id: string; token: string }) => {
+    if (req.user !== null) {
+      req.user.tokens = req.user.tokens.filter((token) => {
         return token.token !== req.token;
-      }
-    );
-    await req.user.save();
-    res.send();
+      });
+      await req.user.save();
+      res.send();
+    }
   } catch (error) {
     res.status(500).send();
   }
@@ -54,9 +55,11 @@ userRouter.post("/users/logout", auth, async (req: IRequest, res) => {
 // @ts-ignore
 userRouter.post("/users/logoutAll", auth, async (req: IRequest, res) => {
   try {
-    req.user.tokens = [];
-    await req.user.save();
-    res.send();
+    if (req.user !== null) {
+      req.user.tokens = [];
+      await req.user.save();
+      res.send();
+    }
   } catch (error) {
     res.status(500).send();
   }
@@ -81,9 +84,13 @@ userRouter.patch("/users/me", auth, async (req: IRequest, res) => {
   }
 
   try {
-    updateProperty.forEach((update) => (req.user[update] = req.body[update]));
-    await req.user.save();
-    res.send(req.user);
+    if (req.user !== null) {
+      updateProperty.forEach((update) => {
+        req.user = req.body[update];
+      });
+      await req.user.save();
+      res.send(req.user);
+    }
   } catch (error) {
     res.status(400).send(error);
   }
@@ -93,8 +100,10 @@ userRouter.patch("/users/me", auth, async (req: IRequest, res) => {
 // @ts-ignore
 userRouter.delete("/users/me", auth, async (req: IRequest, res) => {
   try {
-    await req.user.remove();
-    res.send(req.user);
+    if (req.user !== null) {
+      await req.user.remove();
+      res.send(req.user);
+    }
   } catch (error) {
     res.status(500).send(error);
   }
@@ -118,15 +127,18 @@ const upload = multer({
 });
 
 // upload a profile avatar
+
 //@ts-ignore
 userRouter.post(
   "/users/me/avatar",
   auth,
   upload.single("avatar"),
   async (req: IRequest, res: Response) => {
-    req.user.avatar = req.file.buffer;
-    await req.user.save();
-    res.send({ success: "Profile avatar uploaded successfully" });
+    if (req.user !== null) {
+      req.user.avatar = req.file.buffer;
+      await req.user.save();
+      res.send({ success: "Profile avatar uploaded successfully" });
+    }
   },
   (error: MulterError, req: Request, res: Response, next: NextFunction) => {
     res.status(400).send({ error: error.message });
