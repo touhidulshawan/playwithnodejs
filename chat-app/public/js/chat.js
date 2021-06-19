@@ -17,3 +17,18 @@ document.getElementById("messageForm").addEventListener("submit", (evt) => {
   // reset form value
   inputText.value = "";
 });
+
+// send current location to other users
+
+document.getElementById("sendLocation").addEventListener("click", () => {
+  if (!navigator.geolocation) {
+    alert("Geolocation is not supported by your browser");
+  }
+
+  navigator.geolocation.getCurrentPosition((position) => {
+    socket.emit("location", {
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+    });
+  });
+});

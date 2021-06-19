@@ -29,6 +29,14 @@ io.on("connection", (socket: Socket) => {
   socket.on("sendMessage", (msg) => {
     io.emit("message", msg);
   });
+
+  socket.on("location", (coords) => {
+    io.emit(
+      "messsage",
+      `https://google.com/maps?q=${coords.latitude},${coords.longitude}`
+    );
+  });
+
   // send message when a user left
   socket.on("disconnect", () => {
     io.emit("message", "A user has left the room!");
