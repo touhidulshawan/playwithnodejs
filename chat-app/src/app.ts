@@ -26,6 +26,7 @@ io.on("connection", (socket: Socket) => {
   log.info("New websocket connection");
   socket.emit("message", welcomeMessage);
   socket.broadcast.emit("message", "A new has joined");
+
   socket.on("sendMessage", (msg) => {
     io.emit("message", msg);
   });
