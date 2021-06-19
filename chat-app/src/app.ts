@@ -29,6 +29,10 @@ io.on("connection", (socket: Socket) => {
   socket.on("sendMessage", (msg) => {
     io.emit("message", msg);
   });
+  // send message when a user left
+  socket.on("disconnect", () => {
+    io.emit("message", "A user has left the room!");
+  });
 });
 
 server.listen(port, () => {
