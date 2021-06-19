@@ -21,8 +21,14 @@ app.use(expres.static(publicDirectoryPath));
 
 routes(app);
 
+let welcomeMessage = "Welcome! to the chat app";
 io.on("connection", (socket: Socket) => {
   log.info("New websocket connection");
+  socket.emit("message", welcomeMessage);
+
+  socket.on("sendMessage", (msg) => {
+    io.emit("message", msg);
+  });
 });
 
 server.listen(port, () => {

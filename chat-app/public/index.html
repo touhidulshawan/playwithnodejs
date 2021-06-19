@@ -8,6 +8,19 @@
   </head>
   <body>
     <h1>Chat App</h1>
+    <div>
+      <form id="messageForm">
+        <input
+          type="text"
+          name="messageBox"
+          id="messageBox"
+          placeholder="Type your message text here..."
+          value=""
+          required
+        />
+        <button type="submit" id="messageSendBtn">Send</button>
+      </form>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/chat.js"></script>
   </body>
